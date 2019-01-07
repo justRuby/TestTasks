@@ -13,21 +13,5 @@ namespace Test_Server_1.Models
         public string Description { get; set; }
         public string Date { get; set; }
         public string Image { get; set; }
-
-        public bool IntegrityCheck()
-        {
-            if (NoteID != string.Empty &&
-               Headline != string.Empty &&
-               Description != string.Empty &&
-               Date != string.Empty &&
-               Image != string.Empty)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
     }
 }

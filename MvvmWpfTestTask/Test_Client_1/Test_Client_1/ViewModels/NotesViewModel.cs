@@ -243,12 +243,10 @@ namespace Test_Client_1.ViewModels
                                         .TrimEnd('=');
 
                 var model = new NoteModel() {NoteID = id, Headline = NHeadline, Description = NDescription, Date = NDate, Image = NImage };
-                var result = await _rAController.CheckServer();
+                var result = await _rAController.AddNoteAsync(model);
 
                 if (result.Result)
                 {
-                    await _rAController.AddNoteAsync(model);
-
                     WidthMainGrid = 360.0d;
                     ChangeVisible();
                     DropNoteFields();
@@ -257,7 +255,6 @@ namespace Test_Client_1.ViewModels
                 else
                 {
                     var message = string.Empty;
-
                     foreach (var error in result.errorMessageList)
                         message = "\n" + error;
 

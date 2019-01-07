@@ -67,13 +67,13 @@ namespace Test_Server_1.Controllers
         {
             NoteModel newNote = await DeserializeModelAsync(json);
 
-            if(newNote.IntegrityCheck())
+            if (!newNote.NoteID.Equals(string.Empty) &&
+                !newNote.Headline.Equals(string.Empty) &&
+                !newNote.Description.Equals(string.Empty) &&
+                !newNote.Date.Equals(string.Empty) &&
+                !newNote.Image.Equals(string.Empty))
             {
                 NoteList.Add(newNote);
-            }
-            else
-            {
-                return false;
             }
 
             return await Task.FromResult(await SaveJson());

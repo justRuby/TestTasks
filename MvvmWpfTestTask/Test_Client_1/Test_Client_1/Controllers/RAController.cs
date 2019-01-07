@@ -81,10 +81,9 @@ namespace Test_Client_1.Controllers
 
             return await Task.FromResult(result);
         }
-
         public async Task<List<NoteModel>> GetNotesAsync()
         {
-            string content = string.Empty;
+            string json = string.Empty;
 
             Uri baseAddress = new Uri(DOMAIN);
             CookieContainer cookieContainer = new CookieContainer();
@@ -95,26 +94,27 @@ namespace Test_Client_1.Controllers
                 {
                     cookieContainer.Add(baseAddress, new Cookie(NAME, App.UserToken));
 
-                    var answer = await client.GetAsync(DOMAIN + "Get");
+                    var result = await client.GetAsync(DOMAIN + "Get");
 
-                    if (answer.StatusCode == HttpStatusCode.OK)
+                    if (result.StatusCode == HttpStatusCode.OK)
                     {
-                        HttpContent con = answer.Content;
-                        content = await con.ReadAsStringAsync();
+                        HttpContent con = result.Content;
+                        json = await con.ReadAsStringAsync();
                     }
                 }
             }
 
-            List<NoteModel> result = null;
+            List<NoteModel> content = null;
 
-            if (content != "")
-                result = JsonConvert.DeserializeObject<List<NoteModel>>(content);
+            if (json != "")
+                content = JsonConvert.DeserializeObject<List<NoteModel>>(json);
 
-            return await Task.FromResult(result);
+            return await Task.FromResult(content);
         }
 
-        public async Task AddNoteAsync(NoteModel model)
+        public async Task<AnswerModel> AddNoteAsync(NoteModel model)
         {
+            AnswerModel answer = new AnswerModel();
             string content = string.Empty;
             string json = JsonConvert.SerializeObject(model);
 
@@ -131,7 +131,9 @@ namespace Test_Client_1.Controllers
                 {
                     cookieContainer.Add(baseAddress, new Cookie(NAME, App.UserToken));
 
-                    HttpResponseMessage result = await client.GetAsync(DOMAIN + "Add");
+                    HttpResponseMessage result = await client.PostAsync(DOMAIN + "Add", httpContent);
+
+                    answer = CheckExceptions(result);
 
                     if (result != null && result.StatusCode == HttpStatusCode.OK)
                     {
@@ -140,11 +142,13 @@ namespace Test_Client_1.Controllers
 
                         if (content.Equals("t"))
                         {
-                            //res.Result = true;
+                            answer.Result = true;
                         }
                     }
                 }
             }
+
+            return await Task.FromResult(answer);
         }
 
         public async Task EditNoteAsync(NoteModel model)
@@ -248,6 +252,35 @@ namespace Test_Client_1.Controllers
                     }
                 }
             }
+        }
+
+        private AnswerModel CheckExceptions(HttpResponseMessage response)
+        {
+            AnswerModel result = new AnswerModel();
+
+            try
+            {
+                response.EnsureSuccessStatusCode();
+            }
+            catch (HttpRequestException ex)
+            {
+                result.errorMessageList.Add(ex.Message);
+            }
+            catch (SocketException ex)
+            {
+                result.errorMessageList.Add(ex.Message);
+            }
+            catch (WebException ex)
+            {
+                WebExceptionStatus status = ex.Status;
+                if (status == WebExceptionStatus.ProtocolError)
+                {
+                    HttpWebResponse httpResponse = (HttpWebResponse)ex.Response;
+                    result.errorMessageList.Add(string.Format("Статусный код ошибки: {0} - {1}", (int)httpResponse.StatusCode, httpResponse.StatusCode));
+                }
+            }
+
+            return result;
         }
 
     }

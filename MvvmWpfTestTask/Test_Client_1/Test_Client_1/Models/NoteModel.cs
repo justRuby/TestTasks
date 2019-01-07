@@ -12,9 +12,24 @@ namespace Test_Client_1.Models
     {
         public string NoteID { get; set; }
 
-        public string Headline { get; set; }
-        public string Description { get; set; }
         public string Date { get; set; }
+
+        private string _headline;
+
+        public string Headline
+        {
+            get { return _headline; }
+            set { _headline = value; OnPropertyChanged("Headline"); }
+        }
+
+        private string _description;
+
+        public string Description
+        {
+            get { return _description; }
+            set { _description = value; OnPropertyChanged("Description"); }
+        }
+
 
         private string _image;
 
