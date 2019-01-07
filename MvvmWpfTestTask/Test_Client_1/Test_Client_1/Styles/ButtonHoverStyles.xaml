@@ -1,0 +1,143 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Test_Client_1.Styles">
+
+    <Style x:Key="HoverShadowEffectButton">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid RenderTransformOrigin="1,1" 
+                          x:Name="RootGrid" 
+                          Background="{TemplateBinding Background}">
+
+                        <Grid.Effect>
+                            <DropShadowEffect x:Name="shadow" ShadowDepth="0" BlurRadius="4" Opacity="0.5"/>
+                        </Grid.Effect>
+
+                        <ContentPresenter HorizontalAlignment="Stretch" 
+                                          VerticalAlignment="Stretch"/>
+
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="Button.MouseEnter">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard>
+                                    <Storyboard Timeline.DesiredFrameRate="60">
+                                        <DoubleAnimation Storyboard.TargetProperty="BlurRadius" 
+                                                         Storyboard.TargetName="shadow"
+                                                         From="4" To="10"  
+                                                         AutoReverse="False" 
+                                                         Duration="0:0:0.4"  />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                                <BeginStoryboard>
+                                    <Storyboard Timeline.DesiredFrameRate="60">
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" 
+                                                         Storyboard.TargetName="shadow"
+                                                         From="0.5" To="0.8"  
+                                                         AutoReverse="False" 
+                                                         Duration="0:0:0.4"  />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.MouseLeave">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard>
+                                    <Storyboard Timeline.DesiredFrameRate="60">
+                                        <DoubleAnimation Storyboard.TargetProperty="BlurRadius" 
+                                                         Storyboard.TargetName="shadow"
+                                                         From="10" To="4"  
+                                                         AutoReverse="False" 
+                                                         Duration="0:0:0.4"  />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                                <BeginStoryboard>
+                                    <Storyboard Timeline.DesiredFrameRate="60">
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" 
+                                                         Storyboard.TargetName="shadow"
+                                                         From="0.8" To="0.5"  
+                                                         AutoReverse="False" 
+                                                         Duration="0:0:0.4"  />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="HoverShadowEffectButtonV2">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid RenderTransformOrigin="1,1" 
+                          x:Name="RootGrid" 
+                          Background="{TemplateBinding Background}">
+
+                        <Grid.Effect>
+                            <DropShadowEffect x:Name="shadow" ShadowDepth="0" BlurRadius="2" Opacity="0.5"/>
+                        </Grid.Effect>
+
+                        <ContentPresenter HorizontalAlignment="Center" 
+                                          VerticalAlignment="Center"/>
+
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="Button.MouseEnter">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard>
+                                    <Storyboard Timeline.DesiredFrameRate="60">
+                                        <DoubleAnimation Storyboard.TargetProperty="BlurRadius" 
+                                                         Storyboard.TargetName="shadow"
+                                                         From="2" To="6"  
+                                                         AutoReverse="False" 
+                                                         Duration="0:0:0.2"  />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                                <BeginStoryboard>
+                                    <Storyboard Timeline.DesiredFrameRate="60">
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" 
+                                                         Storyboard.TargetName="shadow"
+                                                         From="0.5" To="0.6"  
+                                                         AutoReverse="False" 
+                                                         Duration="0:0:0.2"  />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.MouseLeave">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard>
+                                    <Storyboard Timeline.DesiredFrameRate="60">
+                                        <DoubleAnimation Storyboard.TargetProperty="BlurRadius" 
+                                                         Storyboard.TargetName="shadow"
+                                                         From="6" To="2"  
+                                                         AutoReverse="False" 
+                                                         Duration="0:0:0.2"  />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                                <BeginStoryboard>
+                                    <Storyboard Timeline.DesiredFrameRate="60">
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" 
+                                                         Storyboard.TargetName="shadow"
+                                                         From="0.6" To="0.5"  
+                                                         AutoReverse="False" 
+                                                         Duration="0:0:0.2"  />
+                                    </Storyboard>
+                                </BeginStoryboard>
+
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
